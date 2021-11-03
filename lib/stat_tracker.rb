@@ -84,6 +84,22 @@ class StatTracker
     percentage_home_wins = (home_wins_count / total_games_count) * 100
     percentage_home_wins.round(2)
   end
+
+  def visitor_wins_count
+    visitor_wins_count = 0.0
+    @games.each_value do |game|
+      if game.away_goals > game.home_goals
+        visitor_wins_count += 1
+      end
+    end
+    visitor_wins_count
+  end
+
+  def percentage_visitor_wins
+    percentage_visitor_wins = (visitor_wins_count / total_games_count) * 100
+
+    percentage_visitor_wins.round(2)
+  end
   # League Statistics
 
 
