@@ -23,6 +23,7 @@ class StatTracker
       game = Game.new(row)
       @games[game.game_id] = game
     end
+    # require 'pry'; binding.pry
   end
 
   def read_team_stats(file)
@@ -35,9 +36,10 @@ class StatTracker
   def read_game_teams_stats(file)
     CSV.foreach(file, headers: true, header_converters: :symbol) do |row|
       game_team = GameTeam.new(row)
-      @game_teams[game_team.game_id] = game_team
+      @game_teams[(game_team.game_id + game_team.hoa)] = game_team
     end
   end
+
   # Game Statistics
   def highest_total_score
     high_score = 0
@@ -57,6 +59,15 @@ class StatTracker
 
   # Team Statistics
 
+  def team_info(team_id)
+    info = {
+      :team_id => @teams[team_id].team_id,
+      :franchise_id => @teams[team_id].franchise_id,
+      :team_name => @teams[team_id].team_name,
+      :abbreviation => @teams[team_id].abbreviation,
+      :link => @teams[team_id].link
+    }
+  end
 
 
 end
