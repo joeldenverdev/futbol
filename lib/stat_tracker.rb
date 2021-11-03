@@ -100,6 +100,23 @@ class StatTracker
 
     percentage_visitor_wins.round(2)
   end
+
+  def tied_games_count
+    tied_games_count = 0.0
+    @games.each_value do |game|
+      if game.away_goals == game.home_goals
+        tied_games_count += 1
+      end
+    end
+    tied_games_count
+  end
+
+  def percentage_ties
+    percentage_ties = (tied_games_count / total_games_count) * 100
+
+    percentage_ties.round(2)
+  end
+
   # League Statistics
 
 
