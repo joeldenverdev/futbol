@@ -63,7 +63,7 @@ RSpec.describe StatTracker do
     end
   end
 
-  describe '#total_games_count' do
+  xdescribe '#total_games_count' do
     it 'returns the total number of games' do
       expect(@stat_tracker[0].total_games_count).to be_an_instance_of Float
 
@@ -71,7 +71,7 @@ RSpec.describe StatTracker do
     end
   end
 
-  describe '#home_wins_count' do
+  xdescribe '#home_wins_count' do
     it 'counts the number of times home team outscored away team' do
       expect(@stat_tracker[0].home_wins_count).to be_an_instance_of Float
 
@@ -79,13 +79,29 @@ RSpec.describe StatTracker do
     end
   end
 
-  describe '#percentage_home_wins' do
+  xdescribe '#percentage_home_wins' do
     it 'returns a float' do
       expect(@stat_tracker[0].percentage_home_wins).to be_an_instance_of Float
     end
 
     it 'percentage of games won by the home team' do
       expect(@stat_tracker[0].percentage_home_wins).to eq 43.50
+    end
+  end
+
+  describe '#visitor_wins_count' do
+    it 'counts the numbers of times away team outscored home team' do
+      expect(@stat_tracker[0].visitor_wins_count).to be_an_instance_of Float
+
+      expect(@stat_tracker[0].visitor_wins_count).to eq 2687.0
+    end
+  end
+
+  describe '#percentage_visitor_wins' do
+    it 'returns a float' do
+      expect(@stat_tracker[0].percentage_visitor_wins).to be_an_instance_of Float
+
+      expect(@stat_tracker[0].percentage_visitor_wins).to eq 36.11
     end
   end
 end
