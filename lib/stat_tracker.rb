@@ -66,10 +66,23 @@ class StatTracker
     low_score
   end
 
-  def percentage_home_wins
-    home_wins_count = 0
+  def total_games_count
+    @games.length.to_f
+  end
+
+  def home_wins_count
+    home_wins_count = 0.0
     @games.each_value do |game|
-      if game.home_goals
+      if game.home_goals > game.away_goals
+        home_wins_count += 1
+      end
+    end
+    home_wins_count
+  end
+
+  def percentage_home_wins
+    percentage_home_wins = (home_wins_count / total_games_count) * 100
+    percentage_home_wins.round(2)
   end
   # League Statistics
 
