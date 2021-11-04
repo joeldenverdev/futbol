@@ -70,32 +70,94 @@ class StatTracker
     }
   end
 
-  def best_season
-
-    team_ids = @teams.each_value.map { |team| team.team_id }
-
-    wins_by_team = Hash.new(0)
-    games_by_team = Hash.new(0)
-    percentage_by_team = Hash.new(0)
-
-    team_ids.each do |id|
+  def best_season(team_id)
+    game_ids = []
+    @game_teams.each do |a, b|
+      if b.team_id == team_id
+        game_ids << a
+      end
+    end
+    # 1. total per season
+    # 2. wins per season
+    # 3. percentage per season
+    # 4. max_by
+    won_game_ids = []
+    game_ids.each do |id|
       @game_teams.each_value do |a|
-        if a.team_id == id
-          games_by_team[a.team_id] += 1
+        if id == a.game_id + a.hoa
           if a.result == "WIN"
-            wins_by_team[a.team_id] += 1
+            won_game_ids << id.slice(0..9)
           end
         end
       end
-      if games_by_team[id] > 0
-        percentage_by_team[id] = (wins_by_team[id] * 100 / games_by_team[id]).to_f
+    end
+
+    total_by_season = Hash.new(0)
+
+    game_ids.each do |id|
+      @games.each_value do |a|
+        if a.game_id.to_s == id.slice(0..9)
+          total_by_season[a.season] += 1
+        end
       end
     end
 
-   max_team = percentage_by_team.max_by { |key,value| value }[0]
-   
-   return @teams[max_team].team_name
+    wins_by_season = Hash.new(0)
+
+    won_game_ids.each do |id|
+      @games.each_value do |a|
+        if a.game_id.to_s == id
+          wins_by_season[a.season] += 1
+        end
+      end
+    end
+
+    percent_by_season = Hash.new(0)
+
+    total_by_season.each_key do |a|
+      percent_by_season[a] = wins_by_season[a] * 100 / total_by_season[a].to_f
+    end
+    max_season = percent_by_season.max_by { |key,value| value }[0]
+
+    require 'pry'; binding.pry
+
+
+    # game_ids.each do |id|
+    #   @game_teams.each_value do |a|
+    #     if a.result == "WIN"
+    #
+    #     require 'pry'; binding.pry
+    #   end
+    # end
+    # require 'pry'; binding.pry
+
+
+    # # season: wins_in_the_season / games_in_the_season
+   #  team_ids = @teams.each_value.map { |team| team.team_id }
+   #
+   #  wins_by_team = Hash.new(0)
+   #  games_by_team = Hash.new(0)
+   #  percentage_by_team = Hash.new(0)
+   #
+   #  team_ids.each do |id|
+   #    @game_teams.each_value do |a|
+   #      if a.team_id == id
+   #        games_by_team[a.team_id] += 1
+   #        if a.result == "WIN"
+   #          wins_by_team[a.team_id] += 1
+   #        end
+   #      end
+   #    end
+   #    if games_by_team[id] > 0
+   #      percentage_by_team[id] = (wins_by_team[id] * 100 / games_by_team[id]).to_f
+   #    end
+   #  end
+   #
+   # max_team = percentage_by_team.max_by { |key,value| value }[0]
+   #
+   # return @teams[max_team].team_name
 
   end
+
 
 end
