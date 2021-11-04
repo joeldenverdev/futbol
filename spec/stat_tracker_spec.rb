@@ -120,6 +120,22 @@ RSpec.describe StatTracker do
       expect(@stat_tracker[0].percentage_ties).to eq 20.39
     end
   end
+
+  describe '#total_goals' do
+    it 'counts the total number of away_goals and home_goals' do
+      expect(@stat_tracker[0].total_goals).to be_an_instance_of Float
+
+      expect(@stat_tracker[0].total_goals).to eq 0
+    end
+  end
+
+  describe '#average_goals_per_game' do
+    it 'divides the total number of goals by the total number of games' do
+      expect(@stat_tracker.average_goals_per_game).to be_an_instance_of Float
+
+      expect(@stat_tracker.average_goals_per_game).to eq 0
+    end
+  end
 end
 
 
