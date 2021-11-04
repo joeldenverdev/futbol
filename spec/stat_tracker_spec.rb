@@ -20,7 +20,7 @@ require 'rspec'
 describe StatTracker do
   before(:each) do
     game_path = './data/games_test.csv'
-    team_path = './data/teams_test.csv'
+    team_path = './data/teams.csv'
     game_teams_path = './data/game_teams_test.csv'
     @games = {}
     @teams = {}
@@ -31,37 +31,34 @@ describe StatTracker do
       game_teams: game_teams_path
     }
 
-    stat_tracker = StatTracker.from_csv(locations)
-    stat_tracker[0].read_game_stats(game_path)
-    stat_tracker[0].read_team_stats(team_path)
-    stat_tracker[0].read_game_teams_stats(game_teams_path)
-    require 'pry'; binding.pry
-
+    @stat_tracker = StatTracker.from_csv(locations)
+    @stat_tracker[0].read_game_stats(game_path)
+    @stat_tracker[0].read_team_stats(team_path)
+    @stat_tracker[0].read_game_teams_stats(game_teams_path)
   end
 
   describe '#team_info' do
     it 'returns team_id, franchise_id, team_name, abbr., and link' do
       expected = {
-        team_id => 27,
-        franchise_id => 28,
-        team_name => "San Jose Earthquakes",
-        abbreviation => "SJ",
-        link => "/api/v1/teams/27"
+        :team_id => 27,
+        :franchise_id => 28,
+        :team_name => "San Jose Earthquakes",
+        :abbreviation => "SJ",
+        :link => "/api/v1/teams/27"
       }
-      require 'pry'; binding.pry
-      expect(stat_tracker[0].team_info).to eq(expected)
+      expect(@stat_tracker[0].team_info(27)).to eq(expected)
     end
   end
 
   describe '#best_season' do
-    xit 'returns the season with the highest win percentage for a team' do
-
+    it 'returns the season with the highest win percentage for a team' do
+      expect(@stat_tracker[0].best_season(3)).to eq("20142015")
     end
   end
 
   describe '#worst_season' do
-    xit 'returns the season with the lowest win percentage for a team' do
-
+    it 'returns the season with the lowest win percentage for a team' do
+      expect(@stat_tracker[0].worst_season(3)).to eq("20152016")
     end
   end
 
