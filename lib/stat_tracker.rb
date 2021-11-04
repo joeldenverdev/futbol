@@ -112,9 +112,55 @@ class StatTracker
     total_by_season.each_key do |a|
       percent_by_season[a] = wins_by_season[a] * 100 / total_by_season[a].to_f
     end
-    
+
     max_season = percent_by_season.max_by { |key,value| value }[0]
 
+  end
+
+  def worst_season(team_id)
+    game_ids = []
+    won_game_ids = []
+    total_by_season = Hash.new(0)
+    wins_by_season = Hash.new(0)
+    percent_by_season = Hash.new(0)
+
+    @game_teams.each do |a, b|
+      if b.team_id == team_id
+        game_ids << a
+      end
+    end
+
+    game_ids.each do |id|
+      @game_teams.each_value do |a|
+        if id == a.game_id + a.hoa
+          if a.result == "WIN"
+            won_game_ids << id.slice(0..9)
+          end
+        end
+      end
+    end
+
+    game_ids.each do |id|
+      @games.each_value do |a|
+        if a.game_id.to_s == id.slice(0..9)
+          total_by_season[a.season] += 1
+        end
+      end
+    end
+
+    won_game_ids.each do |id|
+      @games.each_value do |a|
+        if a.game_id.to_s == id
+          wins_by_season[a.season] += 1
+        end
+      end
+    end
+
+    total_by_season.each_key do |a|
+      percent_by_season[a] = wins_by_season[a] * 100 / total_by_season[a].to_f
+    end
+
+    max_season = percent_by_season.min_by { |key,value| value }[0]
   end
 
 
