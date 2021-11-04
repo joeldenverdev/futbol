@@ -105,7 +105,7 @@ RSpec.describe StatTracker do
     end
   end
 
-  describe '#tied_games_count' do
+  xdescribe '#tied_games_count' do
     it 'returns a float' do
       expect(@stat_tracker[0].tied_games_count).to be_an_instance_of Float
 
@@ -113,7 +113,7 @@ RSpec.describe StatTracker do
     end
   end
 
-  describe '#percentage_ties' do
+  xdescribe '#percentage_ties' do
     it 'returns the percentage of game where the scores were equal' do
       expect(@stat_tracker[0].percentage_ties).to be_an_instance_of Float
 
@@ -121,19 +121,19 @@ RSpec.describe StatTracker do
     end
   end
 
-  describe '#total_goals' do
+  xdescribe '#total_goals' do
     it 'counts the total number of away_goals and home_goals' do
       expect(@stat_tracker[0].total_goals).to be_an_instance_of Float
 
-      expect(@stat_tracker[0].total_goals).to eq 0
+      expect(@stat_tracker[0].total_goals).to eq 31413.0
     end
   end
 
-  describe '#average_goals_per_game' do
+  xdescribe '#average_goals_per_game' do
     it 'divides the total number of goals by the total number of games' do
-      expect(@stat_tracker.average_goals_per_game).to be_an_instance_of Float
+      expect(@stat_tracker[0].average_goals_per_game).to be_an_instance_of Float
 
-      expect(@stat_tracker.average_goals_per_game).to eq 0
+      expect(@stat_tracker[0].average_goals_per_game).to eq 4.22
     end
   end
 end

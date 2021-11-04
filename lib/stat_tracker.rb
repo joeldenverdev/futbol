@@ -117,6 +117,22 @@ class StatTracker
     percentage_ties.round(2)
   end
 
+  def total_goals
+    total_goals = 0.0
+    @games.each_value do |game|
+      game_score = game.away_goals + game.home_goals
+
+      total_goals += game_score
+    end
+    total_goals
+  end
+
+  def average_goals_per_game
+    avg_goals = total_goals / total_games_count
+    avg_goals.round(2)
+  end
+
+
   # League Statistics
 
 
