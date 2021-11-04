@@ -10,7 +10,6 @@ class StatTracker
     @games = {}
     @teams = {}
     @game_teams = {}
-    @min_team = 0
   end
 
   def self.from_csv(locations)
