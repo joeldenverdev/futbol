@@ -10,6 +10,7 @@ class StatTracker
     @games = {}
     @teams = {}
     @game_teams = {}
+    @min_team = 0
   end
 
   def self.from_csv(locations)
@@ -23,7 +24,6 @@ class StatTracker
       game = Game.new(row)
       @games[game.game_id] = game
     end
-    # require 'pry'; binding.pry
   end
 
   def read_team_stats(file)
@@ -51,6 +51,7 @@ class StatTracker
     end
     high_score
   end
+
   # League Statistics
 
 
@@ -69,5 +70,32 @@ class StatTracker
     }
   end
 
+  def best_season
+
+    team_ids = @teams.each_value.map { |team| team.team_id }
+
+    wins_by_team = Hash.new(0)
+    games_by_team = Hash.new(0)
+    percentage_by_team = Hash.new(0)
+
+    team_ids.each do |id|
+      @game_teams.each_value do |a|
+        if a.team_id == id
+          games_by_team[a.team_id] += 1
+          if a.result == "WIN"
+            wins_by_team[a.team_id] += 1
+          end
+        end
+      end
+      if games_by_team[id] > 0
+        percentage_by_team[id] = (wins_by_team[id] * 100 / games_by_team[id]).to_f
+      end
+    end
+
+   max_team = percentage_by_team.max_by { |key,value| value }[0]
+   
+   return @teams[max_team].team_name
+
+  end
 
 end
