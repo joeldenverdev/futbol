@@ -514,16 +514,14 @@ class StatTracker
     wins_by_season = Hash.new(0)
     percent_by_season = Hash.new(0)
 
-    games = @game_teams.select { |game_team| game_team.team_id.to_s == team_id }
-    game_ids = games.map { |game|(game.game_id.to_s + game.hoa) }
-    won_games = @game_teams.select do |game_team|
-      game_team.team_id.to_s == team_id && game_team.result == "WIN"
-    end
-    won_ids = won_games.map { |won_game| won_game.game_id.to_s }
+    games = @game_teams.select { |game_team| game_team.team_id == team_id }
+    game_ids = games.map { |game| (game.game_id + game.hoa) }
+    won_games = @game_teams.select { |game_team| game_team.team_id == team_id && game_team.result == "WIN" }
+    won_ids = won_games.map { |won_game| won_game.game_id }
 
     game_ids.each do |id|
       @games.each do |game|
-        if game.game_id == id.slice(0..9).to_i
+        if game.game_id == id.slice(0..9)
           total_by_season[game.season] += 1
         end
       end
@@ -531,13 +529,13 @@ class StatTracker
 
     won_ids.each do |id|
       @games.each do |game|
-        if game.game_id.to_s == id
+        if game.game_id == id
           wins_by_season[game.season] += 1
         end
       end
     end
 
-    total_by_season.each_key { |key|percent_by_season[key] = percentage(wins_by_season[key], total_by_season[key]) }
+    total_by_season.each_key { |key| percent_by_season[key] = percentage(wins_by_season[key], total_by_season[key]) }
     max_season = percent_by_season.max_by { |key,value| value }[0]
   end
 
@@ -546,16 +544,16 @@ class StatTracker
     wins_by_season = Hash.new(0)
     percent_by_season = Hash.new(0)
 
-    games = @game_teams.select { |game_team| game_team.team_id.to_s == team_id }
-    game_ids = games.map { |game| (game.game_id.to_s + game.hoa) }
+    games = @game_teams.select { |game_team| game_team.team_id == team_id }
+    game_ids = games.map { |game| (game.game_id + game.hoa) }
     won_games = @game_teams.select do |game_team|
-      game_team.team_id.to_s == team_id && game_team.result == "WIN"
+      game_team.team_id == team_id && game_team.result == "WIN"
     end
-    won_ids = won_games.map { |won_game| won_game.game_id.to_s }
+    won_ids = won_games.map { |won_game| won_game.game_id }
 
     game_ids.each do |id|
       @games.each do |game|
-        if game.game_id == id.slice(0..9).to_i
+        if game.game_id == id.slice(0..9)
           total_by_season[game.season] += 1
         end
       end
@@ -563,7 +561,7 @@ class StatTracker
 
     won_ids.each do |id|
       @games.each do |game|
-        if game.game_id.to_s == id
+        if game.game_id == id
           wins_by_season[game.season] += 1
         end
       end
@@ -596,12 +594,12 @@ class StatTracker
     wins_by_team = Hash.new(0)
     percent_by_team = Hash.new(0)
 
-    total_games = @game_teams.select { |game_team| game_team.team_id.to_s == team_id }
-    total_game_ids = total_games.map { |game| (game.game_id.to_s + game.hoa) }
+    total_games = @game_teams.select { |game_team| game_team.team_id == team_id }
+    total_game_ids = total_games.map { |game| (game.game_id + game.hoa) }
 
     total_game_ids.each do |id|
       @game_teams.each do |game|
-        if game.game_id == id.slice(0..9).to_i && game.team_id.to_s != team_id
+        if game.game_id == id.slice(0..9) && game.team_id != team_id
           total_by_team[game.team_id] += 1
         end
       end
@@ -609,7 +607,7 @@ class StatTracker
 
     total_game_ids.each do |id|
       @game_teams.each do |game|
-        if game.game_id == id.slice(0..9).to_i && game.team_id.to_s != team_id && game.result == "WIN"
+        if game.game_id == id.slice(0..9) && game.team_id != team_id && game.result == "WIN"
           wins_by_team[game.team_id] += 1
         end
       end
@@ -626,12 +624,12 @@ class StatTracker
     wins_by_team = Hash.new(0)
     percent_by_team = Hash.new(0)
 
-    total_games = @game_teams.select { |game_team| game_team.team_id.to_s == team_id }
-    total_game_ids = total_games.map { |game| (game.game_id.to_s + game.hoa) }
+    total_games = @game_teams.select { |game_team| game_team.team_id == team_id }
+    total_game_ids = total_games.map { |game| (game.game_id + game.hoa) }
 
     total_game_ids.each do |id|
       @game_teams.each do |game|
-        if game.game_id == id.slice(0..9).to_i && game.team_id.to_s != team_id
+        if game.game_id == id.slice(0..9) && game.team_id != team_id
           total_by_team[game.team_id] += 1
         end
       end
@@ -639,7 +637,7 @@ class StatTracker
 
     total_game_ids.each do |id|
       @game_teams.each do |game|
-        if game.game_id == id.slice(0..9).to_i && game.team_id.to_s != team_id && game.result == "WIN"
+        if game.game_id == id.slice(0..9) && game.team_id != team_id && game.result == "WIN"
           wins_by_team[game.team_id] += 1
         end
       end

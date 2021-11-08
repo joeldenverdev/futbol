@@ -11,7 +11,7 @@ class Game
               :venue_link
 
   def initialize(data)
-    @game_id = data[:game_id].to_i
+    @game_id = data[:game_id]
     @season = data[:season]
     @type = data[:type]
     @date_time = data[:date_time]
