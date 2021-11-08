@@ -68,7 +68,11 @@ RSpec.describe StatTracker do
     end
 
     it 'percentage of games won by the home team' do
-      expect(@stat_tracker.percentage_home_wins).to eq 46.4
+      expected = @stat_tracker.percentage_home_wins
+
+      expect(expected).to be < 1
+
+      expect(expected).to eq(expected.round(2))
     end
   end
 
@@ -84,7 +88,11 @@ RSpec.describe StatTracker do
     it 'returns a float' do
       expect(@stat_tracker.percentage_visitor_wins).to be_an_instance_of Float
 
-      expect(@stat_tracker.percentage_visitor_wins).to eq 39.0
+      expected = @stat_tracker.percentage_visitor_wins
+
+      expect(expected).to be < 1
+
+      expect(expected).to eq(expected.round(2))
     end
   end
 
@@ -100,7 +108,26 @@ RSpec.describe StatTracker do
     it 'returns the percentage of game where the scores were equal' do
       expect(@stat_tracker.percentage_ties).to be_an_instance_of Float
 
-      expect(@stat_tracker.percentage_ties).to eq 14.6
+      expected = @stat_tracker.percentage_ties
+
+      expect(expected).to be < 1
+
+      expect(expected).to eq(expected.round(2))
+    end
+  end
+
+  describe '#percentage calculator methods' do
+    it 'equals 1' do
+      wins = @stat_tracker.percentage_visitor_wins
+
+      losses = @stat_tracker.percentage_visitor_wins
+
+      ties = @stat_tracker.percentage_ties
+
+      total = wins + losses + ties
+
+      expect(total.round).to eq 1
+      expect(total).to be > 0.9
     end
   end
 
