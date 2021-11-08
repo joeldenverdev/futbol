@@ -141,9 +141,12 @@ class StatTracker
     id = @game_teams.max_by do |team|
       average_goals_per_game_by_team(team.team_id)
     end.team_id
+    team_name_by_id(id)
+  end
 
+  def team_name_by_id(team_id)
     @teams.find do |team|
-      id == team.team_id
+      team_id == team.team_id
     end.team_name
   end
 
@@ -170,10 +173,7 @@ class StatTracker
     id = @game_teams.min_by do |team|
       average_goals_per_game_by_team(team.team_id)
     end.team_id
-
-    @teams.find do |team|
-      id == team.team_id
-    end.team_name
+    team_name_by_id(id)
   end
 
   def games_away(team_id)
