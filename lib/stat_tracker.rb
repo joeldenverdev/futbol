@@ -516,7 +516,6 @@ class StatTracker
 
     games = @game_teams.select { |game_team| game_team.team_id.to_s == team_id }
     game_ids = games.map { |game|(game.game_id.to_s + game.hoa) }
-
     won_games = @game_teams.select do |game_team|
       game_team.team_id.to_s == team_id && game_team.result == "WIN"
     end
@@ -538,10 +537,7 @@ class StatTracker
       end
     end
 
-    total_by_season.each_key do |key|
-      percent_by_season[key] = wins_by_season[key].to_f / total_by_season[key].to_f
-    end
-
+    total_by_season.each_key { |key|percent_by_season[key] = percentage(wins_by_season[key], total_by_season[key]) }
     max_season = percent_by_season.max_by { |key,value| value }[0]
   end
 
@@ -552,7 +548,6 @@ class StatTracker
 
     games = @game_teams.select { |game_team| game_team.team_id.to_s == team_id }
     game_ids = games.map { |game| (game.game_id.to_s + game.hoa) }
-
     won_games = @game_teams.select do |game_team|
       game_team.team_id.to_s == team_id && game_team.result == "WIN"
     end
@@ -574,16 +569,14 @@ class StatTracker
       end
     end
 
-    total_by_season.each_key do |key|
-      percent_by_season[key] = wins_by_season[key].to_f / total_by_season[key].to_f
-    end
+    total_by_season.each_key { |key| percent_by_season[key] = percentage(wins_by_season[key], total_by_season[key]) }
     min_season = percent_by_season.min_by { |key,value| value }[0]
   end
 
   def average_win_percentage(team_id)
     total_games = @game_teams.select { |game_team| game_team.team_id.to_s == team_id }
     total_wins = total_games.select { |game| game.result == "WIN" }
-    (total_wins.count.to_f / total_games.count.to_f).round(2)
+    percentage(total_wins.count, total_games.count)
   end
 
   def most_goals_scored(team_id)
@@ -622,10 +615,7 @@ class StatTracker
       end
     end
 
-    total_by_team.each_key do |key|
-      percent_by_team[key] = wins_by_team[key].to_f / total_by_team[key].to_f
-    end
-
+    total_by_team.each_key { |key| percent_by_team[key] = percentage(wins_by_team[key], total_by_team[key]) }
     fav = percent_by_team.min_by { |key, value| value }[0]
     team = @teams.select { |team| team.team_id == fav }
     team.first.team_name
@@ -655,10 +645,7 @@ class StatTracker
       end
     end
 
-    total_by_team.each_key do |key|
-      percent_by_team[key] = wins_by_team[key].to_f / total_by_team[key].to_f
-    end
-
+    total_by_team.each_key { |key| percent_by_team[key] = percentage(wins_by_team[key], total_by_team[key]) }
     fav = percent_by_team.max_by { |key, value| value }[0]
     team = @teams.select { |team| team.team_id == fav }
     team.first.team_name
