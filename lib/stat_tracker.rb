@@ -3,13 +3,14 @@ require_relative 'game'
 require_relative 'team'
 require_relative 'game_team'
 require_relative 'calculator'
+require_relative 'game_statistics'
 
 class StatTracker
   include Calculator
   attr_reader :games, :teams, :game_teams
 
   def initialize (games, teams, game_teams)
-    @games = games
+    @games = GameStatistics.new(games, teams, game_teams)
     @teams = teams
     @game_teams = game_teams
   end
@@ -38,19 +39,15 @@ class StatTracker
    # Game Statistics
 
   def highest_total_score
-    @games.map {|game| game.total_goals}.max
+    @games.highest_total_score
   end
 
   def lowest_total_score
-    @games.map {|game| game.total_goals}.min
-  end
-
-  def total_games_count
-    @games.length.to_f
+    @games.lowest_total_score
   end
 
   def home_wins_count
-    @games.select {|game| game.home_win?}.length.to_f
+    @games.home_wins_count
   end
 
   def percentage_home_wins
