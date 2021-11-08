@@ -6,7 +6,7 @@ module Calculator
   end
 
   def percentage(num1, num2)
-    percentage = (num1.to_f / num2.to_f) * 100
+    percentage = (num1.to_f / num2.to_f)
     percentage.round(2)
   end
 end
