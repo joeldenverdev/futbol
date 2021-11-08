@@ -196,13 +196,6 @@ class StatTracker
   end
 
   def winningest_coach(season)
-    season_games = []
-     @games.each do |game|
-       if game.season == season
-         season_games << game
-       end
-    end
-
     filtered_game_teams = []
     @game_teams.each do |game_team|
       season_games(season).each do |game|
@@ -233,13 +226,6 @@ class StatTracker
   end
 
   def worst_coach(season)
-    season_games = []
-     @games.each do |game|
-       if game.season == season
-         season_games << game
-       end
-    end
-
     filtered_game_teams = []
     @game_teams.each do |game_team|
       season_games(season).each do |game|
@@ -270,13 +256,6 @@ class StatTracker
 
 
   def most_accurate_team(season)
-    season_games = []
-     @games.each do |game|
-       if game.season == season
-         season_games << game
-       end
-    end
-
     filtered_teams = []
     @teams.each do |team|
       @game_teams.each do |game_team|
@@ -318,13 +297,6 @@ class StatTracker
   end
 
   def least_accurate_team(season)
-    season_games = []
-     @games.each do |game|
-       if game.season == season
-         season_games << game
-       end
-    end
-
     filtered_teams = []
     @teams.each do |team|
       @game_teams.each do |game_team|
@@ -366,13 +338,6 @@ class StatTracker
   end
 
   def most_tackles(season)
-    season_games = []
-     @games.each do |game|
-       if game.season == season
-         season_games << game
-       end
-    end
-
     filtered_game_teams = []
     @game_teams.each do |game_team|
       season_games(season).each do |game|
@@ -397,13 +362,6 @@ class StatTracker
   end
 
   def fewest_tackles(season)
-    season_games = []
-    @games.each do |game|
-      if game.season == season
-        season_games << game
-      end
-    end
-
     filtered_game_teams = []
     @game_teams.each do |game_team|
       season_games(season).each do |game|
