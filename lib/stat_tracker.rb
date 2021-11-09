@@ -4,13 +4,15 @@ require_relative 'team'
 require_relative 'game_team'
 require_relative 'calculator'
 require_relative 'game_statistics'
+require_relative 'season_statistics'
 
 class StatTracker
   include Calculator
   attr_reader :games, :teams, :game_teams
 
   def initialize (games, teams, game_teams)
-    @games = GameStatistics.new(games, teams, game_teams)
+    @game_stats = GameStatistics.new(games, teams, game_teams)
+    @season_stats = SeasonStatistics.new(games, teams, game_teams)
     @teams = teams
     @game_teams = game_teams
   end
@@ -35,97 +37,37 @@ class StatTracker
     stat_tracker = StatTracker.new(games, teams, game_teams)
   end
 
-
    # Game Statistics
-
   def highest_total_score
-    @games.highest_total_score
+    @game_stats.highest_total_score
   end
 
   def lowest_total_score
-    @games.lowest_total_score
-  end
-
-  def home_wins_count
-    @games.home_wins_count
+    @game_stats.lowest_total_score
   end
 
   def percentage_home_wins
-    percentage(home_wins_count, total_games_count)
-  end
-
-  def visitor_wins_count
-    @games.select {|game| game.visitor_win?}.length.to_f
+    @game_stats.percentage_home_wins
   end
 
   def percentage_visitor_wins
-    percentage(visitor_wins_count, total_games_count)
-  end
-
-  def tied_games_count
-    @games.select {|game| game.tie_game?}.length.to_f
+    @game_stats.percentage_visitor_wins
   end
 
   def percentage_ties
-    percentage(tied_games_count, total_games_count)
-  end
-
-  def total_goals
-    total_goals_count = 0.0
-    @games.each do |game|
-      total_goals_count += game.total_goals
-    end
-    total_goals_count
-  end
-
-  def average_goals_per_game
-    all_total_goals = @games.map {|game| game.total_goals}
-    average(all_total_goals)
-  end
-
-  def get_season_ids
-    @games.map do |game|
-      game.season
-    end
-  end
-
-  def filter_by_season(season_id)
-    #create array of all items with season_id
-    filtered_seasons = []
-
-    @games.each do |game|
-      if season_id == game.season
-        filtered_seasons << game
-      end
-    end
-    filtered_seasons
+    @game_stats.percentage_ties
   end
 
   def count_of_games_by_season
-    season_game_count = {}
+    @game_stats.count_of_games_by_season
+  end
 
-    get_season_ids.uniq.each do |season_id|
-      season_game_count[season_id] = filter_by_season(season_id).length.to_f
-    end
-    season_game_count
+  def average_goals_per_game
+    @game_stats.average_goals_per_game
   end
 
   def average_goals_by_season
-    average_goals_by_season = {}
-    get_season_ids.uniq.each do |season_id|
-      season_goal_count = 0
-
-      season_games = filter_by_season(season_id)
-
-      season_games.each do |game|
-          season_goal_count += game.total_goals
-      end
-
-      average_goals = season_goal_count.to_f / season_games.length.to_f
-
-      average_goals_by_season[season_id] = average_goals.round(2)
-    end
-    average_goals_by_season
+    @game_stats.average_goals_by_season
   end
 
   # League Statistics
@@ -193,40 +135,7 @@ class StatTracker
   end
 
   def winningest_coach(season)
-    season_games = []
-     @games.each do |game|
-       if game.season == season
-         season_games << game
-       end
-    end
-
-    filtered_game_teams = []
-    @game_teams.each do |game_team|
-      season_games(season).each do |game|
-        if game.game_id == game_team.game_id
-          filtered_game_teams << game_team
-        end
-      end
-    end
-
-    coach_win_count = Hash.new(0)
-    filtered_game_teams.each do |game_team|
-      if game_team.result == "WIN"
-        coach_win_count[game_team.head_coach] += 1
-      end
-    end
-
-    coach_total_game_count = Hash.new(0)
-    filtered_game_teams.each do |game_team|
-      coach_total_game_count[game_team.head_coach] += 1
-    end
-
-    winning_percent = Hash.new(0)
-    coach_total_game_count.each_key do |key|
-      winning_percent[key] = coach_win_count[key] / coach_total_game_count[key].to_f * 100
-    end
-
-    winning_coach = winning_percent.max_by { |key, value| value }[0]
+    @season_stats.winningest_coach(season)
   end
 
   def worst_coach(season)
