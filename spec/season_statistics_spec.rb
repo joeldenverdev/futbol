@@ -33,4 +33,55 @@ RSpec.describe SeasonStatistics do
     end
   end
 
+  describe '#worst_coach' do
+
+    it 'returns a string' do
+      expect(@stat_tracker.worst_coach("20122013")).to be_a(String)
+    end
+
+    it 'gives name of Coach with the worst win percentage for the season' do
+      expect(@stat_tracker.worst_coach("20122013")).to eq("Todd Richards")
+    end
+  end
+
+  describe '#most_accurate_team' do
+    it 'returns a string' do
+      expect(@stat_tracker.most_accurate_team("20122013")).to be_a(String)
+    end
+
+    it 'gives name of team with the best ratio of shots to goals for the season' do
+      expect(@stat_tracker.most_accurate_team("20122013")).to eq("LA Galaxy")
+    end
+  end
+
+  describe '#least_accurate_team' do
+    it 'returns a string' do
+      expect(@stat_tracker.least_accurate_team("20122013")).to be_a(String)
+    end
+
+    it 'gives name of team with the worst ratio of shots to goals for the season' do
+      expect(@stat_tracker.least_accurate_team("20122013")).to eq("Minnesota United FC")
+    end
+  end
+
+  describe '#most_tackles' do
+    it 'returns a string' do
+      expect(@stat_tracker.most_tackles("20122013")).to be_a(String)
+    end
+
+    it 'gives name of team with the most tackles in the season' do
+      expect(@stat_tracker.most_tackles("20122013")).to eq("FC Cincinnati")
+    end
+  end
+
+  describe '#fewest_tackles' do
+    it 'returns a string' do
+      expect(@stat_tracker.fewest_tackles("20122013")).to be_a(String)
+    end
+
+    it 'gives name of team with the fewest tackles in the season' do
+      expect(@stat_tracker.fewest_tackles("20122013")).to eq("Minnesota United FC")
+    end
+  end
+
 end

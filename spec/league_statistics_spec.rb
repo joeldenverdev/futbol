@@ -30,7 +30,7 @@ RSpec.describe LeagueStatistics do
     end
 
     it 'is intialized as StatTracker class variable' do
-      expect(@league_stats.league_stats).to be_an_instance_of GameStatistics
+      expect(@stats_tracker.league_stats).to be_an_instance_of GameStatistics
     end
   end
 

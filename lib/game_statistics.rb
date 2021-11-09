@@ -1,5 +1,5 @@
-require './lib/game'
-require './lib/calculator'
+require_relative 'game'
+require_relative 'calculator'
 
 class GameStatistics
   include Calculator

@@ -1,7 +1,7 @@
-require './lib/game'
-require './lib/team'
-require './lib/game_team'
-require './lib/calculator'
+require_relative 'game'
+require_relative 'team'
+require_relative 'game_team'
+require_relative 'calculator'
 
 class SeasonStatistics
   include Calculator
@@ -105,6 +105,7 @@ class SeasonStatistics
      goal_count[game_team.team_id] += 1
    end
 
+
    shots_count = Hash.new(0)
    filtered_teams.each do |game_team|
      shots_count[game_team.team_id] += 1
@@ -122,7 +123,7 @@ class SeasonStatistics
    end
 
    best_team_id = best_ratio.max_by { |key, value| value }[0]
-
+require "pry"; binding.pry
    team_name = @teams.find do |team|
      team.team_id == best_team_id
    end

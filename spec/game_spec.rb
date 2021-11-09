@@ -47,9 +47,9 @@ RSpec.describe Game do
     end
 
     it 'has a game id' do
-      expect(game.game_id).to be_instance_of Integer
+      expect(game.game_id).to be_instance_of String
 
-      expect(game.game_id).to eq 15
+      expect(game.game_id).to eq("15")
     end
 
     it 'has a season id' do
