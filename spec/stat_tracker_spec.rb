@@ -312,7 +312,7 @@ RSpec.describe StatTracker do
 
   #Team Statistics Tests
 
-  xdescribe '#team_info' do
+  describe '#team_info' do
     it 'returns team_id, franchise_id, team_name, abbr., and link' do
       expected = {
         "team_id" => "27",
@@ -325,7 +325,7 @@ RSpec.describe StatTracker do
     end
   end
 
-  xdescribe '#best_season' do
+  describe '#best_season' do
     it 'returns the season with the highest win percentage for a team' do
       expect(@stat_tracker.best_season("3")).to eq("20142015")
     end
