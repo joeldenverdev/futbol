@@ -15,7 +15,7 @@ RSpec.describe GameStatistics do
     }
 
     @stat_tracker = StatTracker.from_csv(locations)
-    @games = @stat_tracker.games
+    @game_stats = @stat_tracker.game_stats
   end
 
   describe '#initialize' do

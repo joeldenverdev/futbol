@@ -3,7 +3,7 @@ require './lib/team'
 require './lib/game_team'
 require './lib/calculator'
 
-class LeagueStatistics
+class TeamStatistics
   include Calculator
 
   attr_reader :games,

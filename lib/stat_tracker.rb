@@ -5,6 +5,8 @@ require_relative 'game_team'
 require_relative 'calculator'
 require_relative 'game_statistics'
 require_relative 'season_statistics'
+require_relative 'league_statistics'
+require_relative 'team_statistics'
 
 class StatTracker
   include Calculator
@@ -13,8 +15,8 @@ class StatTracker
   def initialize (games, teams, game_teams)
     @game_stats = GameStatistics.new(games, teams, game_teams)
     @season_stats = SeasonStatistics.new(games, teams, game_teams)
-    @teams = teams
-    @game_teams = game_teams
+    @team_stats = TeamStatistics.new(games, teams, game_teams)
+    @league_stats = LeagueStatistics.new(games, teams, game_teams)
   end
 
   def self.from_csv(locations)
