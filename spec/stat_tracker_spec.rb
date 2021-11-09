@@ -191,7 +191,7 @@ RSpec.describe StatTracker do
 
   describe '#lowest_scoring_home_team' do
     it 'returns team with lowest avg score for home games' do
-      expect(@stat_tracker.lowest_scoring_home_team).to eq("Sky Blue FC")
+      expect(@stat_tracker.lowest_scoring_home_team).to eq("Washington Spirit FC")
     end
 
     it 'returns a string' do
