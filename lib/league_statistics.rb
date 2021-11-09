@@ -76,7 +76,7 @@ class LeagueStatistics
       game.goals
     end
     avg = away_scores.sum.to_f / games.length.to_f
-    avg.round(1)
+    avg.round(3)
   end
 
   def highest_scoring_visitor
@@ -103,7 +103,7 @@ class LeagueStatistics
       game.goals
     end
     avg = home_scores.sum.to_f / games.length.to_f
-    avg.round(1)
+    avg.round(3)
   end
 
   def highest_scoring_home_team
