@@ -22,15 +22,8 @@ class SeasonStatistics
    end
  end
 
- def winningest_coach(season)
-   season_games = []
-    @games.each do |game|
-      if game.season == season
-        season_games << game
-      end
-   end
-
-   filtered_game_teams = []
+ def filtered_game_teams(season)
+  filtered_game_teams = []
    @game_teams.each do |game_team|
      season_games(season).each do |game|
        if game.game_id == game_team.game_id
@@ -38,183 +31,118 @@ class SeasonStatistics
        end
      end
    end
+   filtered_game_teams
+end
 
+  def filtered_teams(season)
+    filtered_teams = []
+    @teams.each do |team|
+      @game_teams.each do |game_team|
+        season_games(season).each do |game|
+          if game_team.team_id == team.team_id && game.game_id == game_team.game_id
+            filtered_teams << team
+          end
+        end
+      end
+    end
+    filtered_teams
+  end
+
+  def best_ratio(select_teams, goal_count, shots_count)
+    best_ratio = Hash.new(0)
+    select_teams.each do |game_team|
+      goal_count.each_value do |goal|
+        shots_count.each_value do |shot|
+          if goal >= shot
+            best_ratio[game_team.team_id] += 1
+          end
+        end
+      end
+      
+    end
+    best_ratio
+  end
+
+  def worst_ratio(select_teams, goal_count, shots_count)
+    worst_ratio = Hash.new(0)
+    select_teams.each do |game_team|
+      goal_count.each_value do |goal|
+        shots_count.each_value do |shot|
+          ratio = Hash.new(0)
+          ratio = { goal_count[0] / shots_count[0].to_f * 100 }
+          end
+        end
+      end
+    end
+    worst_ratio
+  end
+
+ def winningest_coach(season)
+   select_game_teams = filtered_game_teams(season)
    coach_win_count = Hash.new(0)
-   filtered_game_teams.each do |game_team|
+   select_game_teams.each do |game_team|
      if game_team.result == "WIN"
        coach_win_count[game_team.head_coach] += 1
      end
    end
-
    coach_total_game_count = Hash.new(0)
-   filtered_game_teams.each do |game_team|
-     coach_total_game_count[game_team.head_coach] += 1
-   end
-
+   select_game_teams.each { |game_team| coach_total_game_count[game_team.head_coach] += 1 }
    winning_percent = Hash.new(0)
-   coach_total_game_count.each_key do |key|
-     winning_percent[key] = coach_win_count[key] / coach_total_game_count[key].to_f * 100
-   end
-
+   coach_total_game_count.each_key { |key| winning_percent[key] = coach_win_count[key] / coach_total_game_count[key].to_f * 100 }
    winning_coach = winning_percent.max_by { |key, value| value }[0]
  end
 
  def worst_coach(season)
-   filtered_game_teams = []
-   @game_teams.each do |game_team|
-     season_games(season).each do |game|
-       if game.game_id == game_team.game_id
-         filtered_game_teams << game_team
-       end
-     end
-   end
-
+   select_game_teams = filtered_game_teams(season)
    coach_win_count = Hash.new(0)
-   filtered_game_teams.each do |game_team|
+   select_game_teams.each do |game_team|
      if game_team.result == "WIN"
        coach_win_count[game_team.head_coach] += 1
      end
    end
-
    coach_total_game_count = Hash.new(0)
-   filtered_game_teams.each do |game_team|
-     coach_total_game_count[game_team.head_coach] += 1
-   end
-
+   select_game_teams.each { |game_team| coach_total_game_count[game_team.head_coach] += 1 }
    losing_percent = Hash.new(0)
-   coach_total_game_count.each_key do |key|
-     losing_percent[key] = coach_win_count[key] / coach_total_game_count[key].to_f * 100
-   end
+   coach_total_game_count.each_key { |key| losing_percent[key] = coach_win_count[key] / coach_total_game_count[key].to_f * 100 }
    losing_coach = losing_percent.min_by { |key, value| value }[0]
  end
 
  def most_accurate_team(season)
-   filtered_teams = []
-   @teams.each do |team|
-     @game_teams.each do |game_team|
-       season_games(season).each do |game|
-         if game_team.team_id == team.team_id && game.game_id == game_team.game_id
-           filtered_teams << team
-         end
-       end
-     end
-   end
-
+   select_teams = filtered_teams(season)
    goal_count = Hash.new(0)
-   filtered_teams.each do |game_team|
-     goal_count[game_team.team_id] += 1
-   end
-
-
+   select_teams.each { |game_team| goal_count[game_team.team_id] += 1 }
    shots_count = Hash.new(0)
-   filtered_teams.each do |game_team|
-     shots_count[game_team.team_id] += 1
-   end
-
-   best_ratio = Hash.new(0)
-   filtered_teams.each do |game_team|
-     goal_count.each_value do |goal|
-       shots_count.each_value do |shot|
-         if goal >= shot
-           best_ratio[game_team.team_id] += 1
-         end
-       end
-     end
-   end
-
-   best_team_id = best_ratio.max_by { |key, value| value }[0]
-   team_name = @teams.find do |team|
-     team.team_id == best_team_id
-   end
-   team_name.team_name
+   select_teams.each { |game_team| shots_count[game_team.team_id] += 1 }
+   highest_ratio = best_ratio(select_teams, goal_count, shots_count)
+   require "pry"; binding.pry
+   best_team_id = highest_ratio.max_by { |key, value| value }[0]
+   @teams.find { |team| team.team_id == best_team_id }.team_name
  end
 
  def least_accurate_team(season)
-   filtered_teams = []
-   @teams.each do |team|
-     @game_teams.each do |game_team|
-       season_games(season).each do |game|
-         if game_team.team_id == team.team_id && game.game_id == game_team.game_id
-           filtered_teams << team
-         end
-       end
-     end
-   end
-
+   select_teams = filtered_teams(season)
    goal_count = Hash.new(0)
-   filtered_teams.each do |game_team|
-     goal_count[game_team.team_id] += 1
-   end
-
+   select_teams.each { |game_team| goal_count[game_team.team_id] += 1 }
    shots_count = Hash.new(0)
-   filtered_teams.each do |game_team|
-     shots_count[game_team.team_id] += 1
-   end
-
-   worst_ratio = Hash.new(0)
-   filtered_teams.each do |game_team|
-     goal_count.each_value do |goal|
-       shots_count.each_value do |shot|
-         if goal <= shot
-           worst_ratio[game_team.team_id] += 1
-         end
-       end
-     end
-   end
-
-   worst_team_id = worst_ratio.min_by { |key, value| value }[0]
-
-   team_name = @teams.find do |team|
-     team.team_id == worst_team_id
-   end
-   team_name.team_name
+   select_teams.each { |game_team| shots_count[game_team.team_id] += 1 }
+   lowest_ratio = worst_ratio(select_teams, goal_count, shots_count)
+   worst_team_id = lowest_ratio.min_by { |key, value| value }[0]
+   @teams.find { |team| team.team_id == worst_team_id}.team_name
  end
 
  def most_tackles(season)
-   filtered_game_teams = []
-   @game_teams.each do |game_team|
-     season_games(season).each do |game|
-       if game.game_id == game_team.game_id
-         filtered_game_teams << game_team
-       end
-     end
-   end
-
+   select_game_teams = filtered_game_teams(season)
    total_team_tackles = Hash.new(0)
-   filtered_game_teams.each do |game_team|
-     total_team_tackles[game_team.team_id] += game_team.tackles
-   end
-
+   select_game_teams.each { |game_team| total_team_tackles[game_team.team_id] += game_team.tackles }
    team_id_tackles = total_team_tackles.max_by { |key, value| value }[0]
-
-   team_name = @teams.find do |team|
-     team.team_id == team_id_tackles
-   end
-
-   team_name.team_name
+   team_name = @teams.find { |team| team.team_id == team_id_tackles }.team_name
  end
 
  def fewest_tackles(season)
-   filtered_game_teams = []
-   @game_teams.each do |game_team|
-     season_games(season).each do |game|
-       if game.game_id == game_team.game_id
-         filtered_game_teams << game_team
-       end
-     end
-   end
-
+   select_game_teams = filtered_game_teams(season)
    total_team_tackles = Hash.new(0)
-   filtered_game_teams.each do |game_team|
-     total_team_tackles[game_team.team_id] += game_team.tackles
-   end
-
+   select_game_teams.each { |game_team| total_team_tackles[game_team.team_id] += game_team.tackles }
    team_id_tackles = total_team_tackles.min_by { |key, value| value }[0]
-
-   team_name = @teams.find do |team|
-     team.team_id == team_id_tackles
-   end
-   team_name.team_name
- end
-
+   team_name = @teams.find { |team| team.team_id == team_id_tackles }.team_name
+end
 end
