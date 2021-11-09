@@ -87,8 +87,10 @@ class TeamStatistics
 
   def best_season(team_id)
     percent_by_season = Hash.new(0)
-    games_by_season = total_by_season(team_game_ids(team_id))
-    wins_by_season = wins_by_season(won_game_ids(team_id))
+    team_game_ids = team_game_ids(team_id)
+    won_game_ids = won_game_ids(team_id)
+    games_by_season = total_by_season(team_game_ids)
+    wins_by_season = wins_by_season(won_game_ids)
     games_by_season.each_key do |key|
       percent_by_season[key] = percentage(wins_by_season[key], games_by_season[key])
     end
@@ -97,8 +99,10 @@ class TeamStatistics
 
   def worst_season(team_id)
     percent_by_season = Hash.new(0)
-    games_by_season = total_by_season(team_game_ids(team_id))
-    wins_by_season = wins_by_season(won_game_ids(team_id))
+    team_game_ids = team_game_ids(team_id)
+    won_game_ids = won_game_ids(team_id)
+    games_by_season = total_by_season(team_game_ids)
+    wins_by_season = wins_by_season(won_game_ids)
     games_by_season.each_key do |key|
       percent_by_season[key] = percentage(wins_by_season[key], games_by_season[key])
     end
@@ -123,8 +127,9 @@ class TeamStatistics
 
   def favorite_opponent(team_id)
     percent_by_team = Hash.new(0)
-    games_by_team = games_by_team(team_game_ids(team_id), team_id)
-    wins_by_team = wins_by_team(team_game_ids(team_id), team_id)
+    team_game_ids = team_game_ids(team_id)
+    games_by_team = games_by_team(team_game_ids, team_id)
+    wins_by_team = wins_by_team(team_game_ids, team_id)
     games_by_team.each_key do |key|
       percent_by_team[key] = percentage(wins_by_team[key], games_by_team[key])
     end
@@ -134,8 +139,9 @@ class TeamStatistics
 
   def rival(team_id)
     percent_by_team = Hash.new(0)
-    games_by_team = games_by_team(team_game_ids(team_id), team_id)
-    wins_by_team = wins_by_team(team_game_ids(team_id), team_id)
+    team_game_ids = team_game_ids(team_id)
+    games_by_team = games_by_team(team_game_ids, team_id)
+    wins_by_team = wins_by_team(team_game_ids, team_id)
     games_by_team.each_key do |key|
       percent_by_team[key] = percentage(wins_by_team[key], games_by_team[key])
     end
