@@ -83,9 +83,7 @@ class LeagueStatistics
     id = @game_teams.max_by do |game|
       average_away_score(game.team_id)
     end.team_id
-    @teams.find do |team|
-      id == team.team_id
-    end.team_name
+    team_name_by_id(id)
   end
 
   def games_home(team_id)
@@ -112,29 +110,20 @@ class LeagueStatistics
     id = @game_teams.max_by do |game|
       average_home_score(game.team_id)
     end.team_id
-
-    @teams.find do |team|
-      id == team.team_id
-    end.team_name
+    team_name_by_id(id)
   end
 
   def lowest_scoring_visitor
     id = @game_teams.min_by do |game|
       average_away_score(game.team_id)
     end.team_id
-
-    @teams.find do |team|
-      id == team.team_id
-    end.team_name
+    team_name_by_id(id)
   end
 
   def lowest_scoring_home_team
     id = @game_teams.min_by do |game|
       average_home_score(game.team_id)
     end.team_id
-
-    @teams.find do |team|
-      id == team.team_id
-    end.team_name
+    team_name_by_id(id)
   end
 end
