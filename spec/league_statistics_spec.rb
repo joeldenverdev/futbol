@@ -56,4 +56,10 @@ RSpec.describe LeagueStatistics do
     end
   end
 
+  describe '#team_name_by_id' do
+    it 'returns team name after being given team id' do
+      expect(@stat_tracker.team_name_by_id(3)).to eq("Houston Dynamo")
+    end
+  end
+
 end

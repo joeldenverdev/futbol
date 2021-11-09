@@ -16,18 +16,18 @@ class TeamStatistics
     @game_teams = game_teams
   end
 
-  def team_info(team_id)
-    team = @teams.find { |team| team.team_id.to_s == team_id }
-
-    info = {
-      "team_id" => team.team_id.to_s,
-      "franchise_id" => team.franchise_id.to_s,
-      "team_name" => team.team_name,
-      "abbreviation" => team.abbreviation,
-      "link" => team.link
-    }
-  end
-
+  # def team_info(team_id)
+  #   team = @teams.find { |team| team.team_id.to_s == team_id }
+  #
+  #   info = {
+  #     "team_id" => team.team_id.to_s,
+  #     "franchise_id" => team.franchise_id.to_s,
+  #     "team_name" => team.team_name,
+  #     "abbreviation" => team.abbreviation,
+  #     "link" => team.link
+  #   }
+  # end
+  #
   # def best_season(team_id)
   #   total_by_season = Hash.new(0)
   #   wins_by_season = Hash.new(0)
