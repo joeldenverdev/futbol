@@ -30,7 +30,7 @@ RSpec.describe LeagueStatistics do
     end
 
     it 'is intialized as StatTracker class variable' do
-      expect(@stats_tracker.league_stats).to be_an_instance_of GameStatistics
+      expect(@stat_tracker.league_stats).to be_an_instance_of LeagueStatistics
     end
   end
 
@@ -56,25 +56,25 @@ RSpec.describe LeagueStatistics do
 
   describe '#team_name_by_id' do
     it 'returns team name after being given team id' do
-      expect(@league_stats.team_name_by_id(3)).to eq("Houston Dynamo")
+      expect(@league_stats.team_name_by_id('3')).to eq("Houston Dynamo")
     end
   end
 
   describe '#average_goals_per_game_by_team' do
     it 'returns number of average goals per game by team_id' do
-      expect(@league_stats.average_goals_per_game_by_team(3)).to eq(1.74)
+      expect(@league_stats.average_goals_per_game_by_team('3')).to eq(1.74)
     end
   end
 
   describe '#total_goals_by_team' do
     it 'returns number of total goals by team_id' do
-      expect(@league_stats.total_goals_by_team(3)).to eq(73)
+      expect(@league_stats.total_goals_by_team('3')).to eq(73)
     end
   end
 
   describe '#games_by_team' do
     it 'returns number of games per team by team_id' do
-      expect(@league_stats.games_by_team(3).length).to eq(42)
+      expect(@league_stats.games_by_team('3').length).to eq(42)
     end
   end
 
@@ -90,13 +90,13 @@ RSpec.describe LeagueStatistics do
 
   describe '#games_away' do
     it 'returns all away games by team_id' do
-      expect(@league_stats.games_away(3).length).to eq(22)
+      expect(@league_stats.games_away('3').length).to eq(22)
     end
   end
 
   describe '#average_away_score' do
     it 'returns average score per away game by team_id' do
-      expect(@league_stats.average_away_score(3)).to eq(1.9)
+      expect(@league_stats.average_away_score('3')).to eq(1.9)
     end
   end
 
@@ -112,13 +112,13 @@ RSpec.describe LeagueStatistics do
 
   describe '#games_home' do
     it 'returns all home games by team_id' do
-      expect(@league_stats.games_home(3).length).to eq(20)
+      expect(@league_stats.games_home('3').length).to eq(20)
     end
   end
 
   describe '#average_home_score' do
     it 'returns average score per home game by team_id' do
-      expect(@league_stats.average_home_score(3)).to eq(1.6)
+      expect(@league_stats.average_home_score('3')).to eq(1.6)
     end
   end
 
