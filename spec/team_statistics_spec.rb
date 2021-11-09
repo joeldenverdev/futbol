@@ -18,6 +18,16 @@ RSpec.describe TeamStatistics do
     @team_stats = @stat_tracker.team_stats
   end
 
+  describe '#initialize' do
+    it 'exists' do
+      expect(@team_stats).to be_an_instance_of TeamStatistics
+    end
+
+    it 'is instantiated with StatTracker' do
+      expect(@stat_tracker.team_stats).to be_an_instance_of TeamStatistics
+    end
+  end
+
   describe '#team_info' do
     it 'returns team_id, franchise_id, team_name, abbr., and link' do
       expected = {
@@ -30,6 +40,18 @@ RSpec.describe TeamStatistics do
       expect(@team_stats.team_info("27")).to eq(expected)
     end
   end
+
+  # Total by season
+
+  # Wins by season
+
+  # Games by team
+
+  # Wins by team
+
+  # Team game IDs
+
+  # Won game ids
 
   describe '#best_season' do
     it 'returns the season with the highest win percentage for a team' do
