@@ -33,7 +33,43 @@ RSpec.describe TeamStatistics do
 
   describe '#best_season' do
     it 'returns the season with the highest win percentage for a team' do
-      expect(@stat_tracker.best_season("3")).to eq("20142015")
+      expect(@team_stats.best_season("3")).to eq("20142015")
+    end
+  end
+
+  describe '#worst_season' do
+    it 'returns the season with the lowest win percentage for a team' do
+      expect(@team_stats.worst_season("3")).to eq("20152016")
+    end
+  end
+
+  describe '#average_win_percentage' do
+    it 'returns the average win percentage of all games for a team' do
+      expect(@team_stats.average_win_percentage("3")).to eq(0.36)
+    end
+  end
+
+  describe '#most_goals_scored' do
+    it 'returns the highest nuber of goals a particular team has scored in a single game' do
+      expect(@team_stats.most_goals_scored("3")).to eq(5)
+    end
+  end
+
+  describe '#fewest_goals_scored' do
+    it 'returns the lowest numer of goals a particular team has scored in a single game' do
+      expect(@team_stats.fewest_goals_scored("3")).to eq(0)
+    end
+  end
+
+  describe '#favorite_opponent' do
+    it 'returns the name of the opponent that has the lowest win percentage against the given team' do
+      expect(@team_stats.favorite_opponent("3")).to eq("Atlanta United")
+    end
+  end
+
+  describe '#rival' do
+    it 'returns the name of the opponent that has the highest win percentage against the given team' do
+      expect(@team_stats.rival("3")).to eq("FC Dallas")
     end
   end
 

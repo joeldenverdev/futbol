@@ -16,6 +16,17 @@ class TeamStatistics
     @game_teams = game_teams
   end
 
+  def team_info(team_id)
+    team = @teams.find { |team| team.team_id.to_s == team_id }
+    info = {
+      "team_id" => team.team_id,
+      "franchise_id" => team.franchise_id,
+      "team_name" => team.team_name,
+      "abbreviation" => team.abbreviation,
+      "link" => team.link
+    }
+  end
+
   def total_by_season(game_ids)
     total_by_season = Hash.new(0)
     game_ids.each do |id|
@@ -72,17 +83,6 @@ class TeamStatistics
   def won_game_ids(team_id)
     won_games = @game_teams.select { |game_team| game_team.team_id == team_id && game_team.result == "WIN" }
     won_games.map { |won_game| won_game.game_id }
-  end
-
-  def team_info(team_id)
-    team = @teams.find { |team| team.team_id.to_s == team_id }
-    info = {
-      "team_id" => team.team_id,
-      "franchise_id" => team.franchise_id,
-      "team_name" => team.team_name,
-      "abbreviation" => team.abbreviation,
-      "link" => team.link
-    }
   end
 
   def best_season(team_id)
