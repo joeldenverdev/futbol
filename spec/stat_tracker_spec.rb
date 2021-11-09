@@ -337,37 +337,37 @@ RSpec.describe StatTracker do
     end
   end
 
-  xdescribe '#worst_season' do
+  describe '#worst_season' do
     it 'returns the season with the lowest win percentage for a team' do
       expect(@stat_tracker.worst_season("3")).to eq("20152016")
     end
   end
 
-  xdescribe '#average_win_percentage' do
+  describe '#average_win_percentage' do
     it 'returns the average win percentage of all games for a team' do
       expect(@stat_tracker.average_win_percentage("3")).to eq(0.36)
     end
   end
 
-  xdescribe '#most_goals_scored' do
+  describe '#most_goals_scored' do
     it 'returns the highest nuber of goals a particular team has scored in a single game' do
       expect(@stat_tracker.most_goals_scored("3")).to eq(5)
     end
   end
 
-  xdescribe '#fewest_goals_scored' do
+  describe '#fewest_goals_scored' do
     it 'returns the lowest numer of goals a particular team has scored in a single game' do
       expect(@stat_tracker.fewest_goals_scored("3")).to eq(0)
     end
   end
 
-  xdescribe '#favorite_opponent' do
+  describe '#favorite_opponent' do
     it 'returns the name of the opponent that has the lowest win percentage against the given team' do
       expect(@stat_tracker.favorite_opponent("3")).to eq("Atlanta United")
     end
   end
 
-  xdescribe '#rival' do
+  describe '#rival' do
     it 'returns the name of the opponent that has the highest win percentage against the given team' do
       expect(@stat_tracker.rival("3")).to eq("FC Dallas")
     end
