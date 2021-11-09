@@ -123,7 +123,6 @@ class SeasonStatistics
    end
 
    best_team_id = best_ratio.max_by { |key, value| value }[0]
-require "pry"; binding.pry
    team_name = @teams.find do |team|
      team.team_id == best_team_id
    end

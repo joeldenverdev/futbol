@@ -19,6 +19,15 @@ RSpec.describe SeasonStatistics do
     @season_stats = @stat_tracker.season_stats
   end
 
+  describe '#initialize' do
+    it 'exists' do
+      expect(@season_stats).to be_instance_of SeasonStatistics
+    end
+
+    it 'is instantiated with StatTracker' do
+      expect(@stat_tracker.season_stats).to be_instance_of SeasonStatistics
+    end
+  end
 
   ## Write a method for season_games method?
 
