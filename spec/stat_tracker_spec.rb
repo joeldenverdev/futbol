@@ -198,7 +198,7 @@ RSpec.describe StatTracker do
 
   # League Statistics Tests
 
-  xdescribe '#count of teams' do
+  describe '#count of teams' do
     it 'returns total number of teams' do
       expect(@stat_tracker.count_of_teams).to eq(32)
     end
@@ -208,7 +208,7 @@ RSpec.describe StatTracker do
     end
   end
 
-  xdescribe '#best_offense' do
+  describe '#best_offense' do
     it 'returns team with most avg goals per game for all seasons' do
       expect(@stat_tracker.best_offense).to eq("FC Dallas")
     end
@@ -218,23 +218,23 @@ RSpec.describe StatTracker do
     end
   end
 
-  xdescribe '#games_by_team' do
-    it 'returns number of games per team by team_id' do
-      expect(@stat_tracker.games_by_team(3).length).to eq(42)
-    end
-  end
+  # describe '#games_by_team' do
+  #   it 'returns number of games per team by team_id' do
+  #     expect(@stat_tracker.games_by_team(3).length).to eq(42)
+  #   end
+  # end
 
-  xdescribe '#total_goals_by_team' do
-    it 'returns number of total goals by team_id' do
-      expect(@stat_tracker.total_goals_by_team(3)).to eq(73)
-    end
-  end
-
-  xdescribe '#average_goals_per_game_by_team' do
-    it 'returns number of average goals per game by team_id' do
-      expect(@stat_tracker.average_goals_per_game_by_team(3)).to eq(1.74)
-    end
-  end
+  # describe '#total_goals_by_team' do
+  #   it 'returns number of total goals by team_id' do
+  #     expect(@stat_tracker.total_goals_by_team(3)).to eq(73)
+  #   end
+  # end
+  #
+  # describe '#average_goals_per_game_by_team' do
+  #   it 'returns number of average goals per game by team_id' do
+  #     expect(@stat_tracker.average_goals_per_game_by_team(3)).to eq(1.74)
+  #   end
+  # end
 
   xdescribe '#worst_offense' do
     it 'returns team with least avg goals per game for all seasons' do
