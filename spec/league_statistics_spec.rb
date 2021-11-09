@@ -96,7 +96,7 @@ RSpec.describe LeagueStatistics do
 
   describe '#average_away_score' do
     it 'returns average score per away game by team_id' do
-      expect(@league_stats.average_away_score('3')).to eq(1.9)
+      expect(@league_stats.average_away_score('3')).to eq(1.864)
     end
   end
 
@@ -144,7 +144,7 @@ RSpec.describe LeagueStatistics do
 
   describe '#lowest_scoring_home_team' do
     it 'returns team with lowest avg score for home games' do
-      expect(@league_stats.lowest_scoring_home_team).to eq("Sky Blue FC")
+      expect(@league_stats.lowest_scoring_home_team).to eq("Washington Spirit FC")
     end
 
     it 'returns a string' do
