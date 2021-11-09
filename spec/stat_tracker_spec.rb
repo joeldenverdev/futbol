@@ -46,22 +46,6 @@ RSpec.describe StatTracker do
     end
   end
 
-  # describe '#total_games_count' do
-  #   it 'returns the total number of games' do
-  #     expect(@stat_tracker.total_games_count).to be_an_instance_of Float
-  #
-  #     expect(@stat_tracker.total_games_count).to eq 500.0
-  #   end
-  # end
-
-  # describe '#home_wins_count' do
-  #   it 'counts the number of times home team outscored away team' do
-  #     expect(@stat_tracker.home_wins_count).to be_an_instance_of Float
-  #
-  #     expect(@stat_tracker.home_wins_count).to eq 232.0
-  #   end
-  # end
-
   describe '#percentage_home_wins' do
     it 'returns a float' do
       expect(@stat_tracker.percentage_home_wins).to be_an_instance_of Float
@@ -76,14 +60,6 @@ RSpec.describe StatTracker do
     end
   end
 
-  # describe '#visitor_wins_count' do
-  #   it 'counts the numbers of times away team outscored home team' do
-  #     expect(@stat_tracker.visitor_wins_count).to be_an_instance_of Float
-  #
-  #     expect(@stat_tracker.visitor_wins_count).to eq 195.0
-  #   end
-  # end
-
   describe '#percentage_visitor_wins' do
     it 'returns a float' do
       expect(@stat_tracker.percentage_visitor_wins).to be_an_instance_of Float
@@ -95,14 +71,6 @@ RSpec.describe StatTracker do
       expect(expected).to eq(expected.round(2))
     end
   end
-
-  # describe '#tied_games_count' do
-  #   it 'returns a float' do
-  #     expect(@stat_tracker.tied_games_count).to be_an_instance_of Float
-  #
-  #     expect(@stat_tracker.tied_games_count).to eq 73.0
-  #   end
-  # end
 
   describe '#percentage_ties' do
     it 'returns the percentage of game where the scores were equal' do
@@ -131,14 +99,6 @@ RSpec.describe StatTracker do
     end
   end
 
-  # describe '#total_goals' do
-  #   it 'counts the total number of away_goals and home_goals' do
-  #     expect(@stat_tracker.total_goals).to be_an_instance_of Float
-  #
-  #     expect(@stat_tracker.total_goals).to eq 2088.0
-  #   end
-  # end
-
   describe '#count_of_games_by_season' do
     it 'returns array with season id as key and count as value' do
       @stat_tracker.count_of_games_by_season
@@ -154,7 +114,7 @@ RSpec.describe StatTracker do
     end
   end
 
-  xdescribe '#average_goals_by_season' do
+  describe '#average_goals_by_season' do
     it 'returns hash with season id as key and float of average number of goals per game as value' do
       expect(@stat_tracker.average_goals_by_season).to be_an_instance_of Hash
     end
@@ -174,7 +134,7 @@ RSpec.describe StatTracker do
 
   # Season Statistics Tests
 
-  describe '#winningest_coach' do
+  xdescribe '#winningest_coach' do
 
     it 'returns a string' do
       expect(@stat_tracker.winningest_coach("20122013")).to be_instance_of(String)

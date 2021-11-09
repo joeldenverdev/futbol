@@ -10,7 +10,10 @@ require_relative 'team_statistics'
 
 class StatTracker
   include Calculator
-  attr_reader :games, :teams, :game_teams
+  attr_reader :game_stats,
+              :team_stats,
+              :season_stats,
+              :league_stats
 
   def initialize (games, teams, game_teams)
     @game_stats = GameStatistics.new(games, teams, game_teams)
