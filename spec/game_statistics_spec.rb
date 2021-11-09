@@ -133,6 +133,14 @@ RSpec.describe GameStatistics do
     end
   end
 
+  describe '#average_goals_per_game' do
+    it 'divides the total number of goals by the total number of games' do
+      expect(@game_stats.average_goals_per_game).to be_an_instance_of Float
+
+      expect(@game_stats.average_goals_per_game).to eq 4.18
+    end
+  end
+
   describe '#percentage calculator methods' do
     it 'equals 1' do
       wins = @game_stats.percentage_visitor_wins
@@ -145,14 +153,6 @@ RSpec.describe GameStatistics do
 
       expect(total.round).to eq 1
       expect(total).to be > 0.9
-    end
-  end
-
-  describe '#average_goals_per_game' do
-    it 'divides the total number of goals by the total number of games' do
-      expect(@game_stats.average_goals_per_game).to be_an_instance_of Float
-
-      expect(@game_stats.average_goals_per_game).to eq 4.18
     end
   end
 
