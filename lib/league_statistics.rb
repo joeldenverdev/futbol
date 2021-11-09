@@ -76,16 +76,14 @@ class LeagueStatistics
       game.goals
     end
     avg = away_scores.sum.to_f / games.length.to_f
-    avg.round(1)
+    avg.round(3)
   end
 
   def highest_scoring_visitor
     id = @game_teams.max_by do |game|
       average_away_score(game.team_id)
     end.team_id
-    @teams.find do |team|
-      id == team.team_id
-    end.team_name
+    team_name_by_id(id)
   end
 
   def games_home(team_id)
@@ -105,36 +103,27 @@ class LeagueStatistics
       game.goals
     end
     avg = home_scores.sum.to_f / games.length.to_f
-    avg.round(1)
+    avg.round(3)
   end
 
   def highest_scoring_home_team
     id = @game_teams.max_by do |game|
       average_home_score(game.team_id)
     end.team_id
-
-    @teams.find do |team|
-      id == team.team_id
-    end.team_name
+    team_name_by_id(id)
   end
 
   def lowest_scoring_visitor
     id = @game_teams.min_by do |game|
       average_away_score(game.team_id)
     end.team_id
-
-    @teams.find do |team|
-      id == team.team_id
-    end.team_name
+    team_name_by_id(id)
   end
 
   def lowest_scoring_home_team
     id = @game_teams.min_by do |game|
       average_home_score(game.team_id)
     end.team_id
-
-    @teams.find do |team|
-      id == team.team_id
-    end.team_name
+    team_name_by_id(id)
   end
 end
