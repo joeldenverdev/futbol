@@ -22,6 +22,16 @@ RSpec.describe StatTracker do
     it 'exists' do
       expect(@stat_tracker).to be_instance_of(StatTracker)
     end
+
+    it 'creates instances of other classes as class variables' do
+      expect(@stat_tracker.game_stats).to be_instance_of GameStatistics
+
+      expect(@stat_tracker.team_stats).to be_instance_of TeamStatistics
+
+      expect(@stat_tracker.season_stats).to be_instance_of SeasonStatistics
+
+      expect(@stat_tracker.league_stats).to be_instance_of LeagueStatistics
+    end
   end
 
   # Game Statistics Tests
@@ -81,21 +91,6 @@ RSpec.describe StatTracker do
       expect(expected).to be < 1
 
       expect(expected).to eq(expected.round(2))
-    end
-  end
-
-  describe '#percentage calculator methods' do
-    it 'equals 1' do
-      wins = @stat_tracker.percentage_visitor_wins
-
-      losses = @stat_tracker.percentage_visitor_wins
-
-      ties = @stat_tracker.percentage_ties
-
-      total = wins + losses + ties
-
-      expect(total.round).to eq 1
-      expect(total).to be > 0.9
     end
   end
 
