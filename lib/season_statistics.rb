@@ -50,27 +50,24 @@ end
 
   def best_ratio(select_teams, goal_count, shots_count)
     best_ratio = Hash.new(0)
+    ratio = Hash.new(0)
     select_teams.each do |game_team|
       goal_count.each_value do |goal|
         shots_count.each_value do |shot|
-          if goal >= shot
-            best_ratio[game_team.team_id] += 1
-          end
+          ratio[game_team.team_id] = goal_count[game_team.team_id] / shots_count[game_team.team_id].to_f * 100
         end
       end
-      
     end
     best_ratio
   end
 
   def worst_ratio(select_teams, goal_count, shots_count)
     worst_ratio = Hash.new(0)
+    ratio = Hash.new(0)
     select_teams.each do |game_team|
       goal_count.each_value do |goal|
         shots_count.each_value do |shot|
-          ratio = Hash.new(0)
-          ratio = { goal_count[0] / shots_count[0].to_f * 100 }
-          end
+         ratio[game_team.team_id] = goal_count[game_team.team_id] / shots_count[game_team.team_id].to_f * 100
         end
       end
     end
@@ -105,26 +102,52 @@ end
    losing_percent = Hash.new(0)
    coach_total_game_count.each_key { |key| losing_percent[key] = coach_win_count[key] / coach_total_game_count[key].to_f * 100 }
    losing_coach = losing_percent.min_by { |key, value| value }[0]
+   require "pry"; binding.pry
  end
 
  def most_accurate_team(season)
    select_teams = filtered_teams(season)
    goal_count = Hash.new(0)
-   select_teams.each { |game_team| goal_count[game_team.team_id] += 1 }
+   select_teams.each do |game_team|
+     @games.each do |game|
+         if game_team.team_id == game.away_team_id.to_s
+           goal_count[game_team.team_id] += game.away_goals
+         elsif game_team.team_id == game.home_team_id.to_s
+           goal_count[game_team.team_id] += game.home_goals
+        end
+      end
+    end
    shots_count = Hash.new(0)
    select_teams.each { |game_team| shots_count[game_team.team_id] += 1 }
    highest_ratio = best_ratio(select_teams, goal_count, shots_count)
-   require "pry"; binding.pry
    best_team_id = highest_ratio.max_by { |key, value| value }[0]
    @teams.find { |team| team.team_id == best_team_id }.team_name
  end
 
  def least_accurate_team(season)
+   select_game_teams = filtered_game_teams(season)
    select_teams = filtered_teams(season)
    goal_count = Hash.new(0)
-   select_teams.each { |game_team| goal_count[game_team.team_id] += 1 }
+   teams = @teams.map do |team|
+     team.team_id
+   end
+   teams.each do |game_team|
+     @games.each do |game|
+         if game_team.team_id == game.away_team_id.to_s
+           goal_count[game_team.team_id] += game.away_goals
+         elsif game_team.team_id == game.home_team_id.to_s
+           goal_count[game_team.team_id] += game.home_goals
+        end
+      end
+    end
    shots_count = Hash.new(0)
-   select_teams.each { |game_team| shots_count[game_team.team_id] += 1 }
+   teams.each do |team|
+     select_game_teams.each do |game|
+       if game.team_id == team
+         shots_count[team.team_id] += game.shots
+       end
+    end
+  end
    lowest_ratio = worst_ratio(select_teams, goal_count, shots_count)
    worst_team_id = lowest_ratio.min_by { |key, value| value }[0]
    @teams.find { |team| team.team_id == worst_team_id}.team_name
